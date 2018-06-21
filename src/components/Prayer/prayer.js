@@ -2,9 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Timetable from '../Table/table'
 import { geolocated } from 'react-geolocated';
+import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import purple from '@material-ui/core/colors/purple';
-import { API, Methods, Period } from '../../config'
+import { PRAYER_API, Methods, Period } from '../../config'
 import { handleResponse } from '../../helpers'
 
 //Select
@@ -35,6 +36,7 @@ class Prayer extends React.Component {
             method: 3,
             period: 0,
             prayerTime: null,
+            address: "",
         }
     }
 
@@ -64,7 +66,14 @@ class Prayer extends React.Component {
     };
 
     listPrayer = () => {
-        this.fetchPrayer(`${API}?latitude=${this.state.geolocation.latitude}&longitude=${this.state.geolocation.longitude}&method=${this.state.method}&month=${this.state.month}&year=${this.state.year}`)
+        if (this.state.address !== "")
+            this.fetchPrayer(`${PRAYER_API}ByAddress?address=${this.state.address}&method=${this.state.method}&month=${this.state.month}&year=${this.state.year}`)
+        else
+            this.fetchPrayer(`${PRAYER_API}?latitude=${this.state.geolocation.latitude}&longitude=${this.state.geolocation.longitude}&method=${this.state.method}&month=${this.state.month}&year=${this.state.year}`)
+    }
+
+    handleInput = (e) => {
+        this.setState({ address: e.target.value})
     }
 
     render() {
@@ -100,7 +109,6 @@ class Prayer extends React.Component {
                                     {Methods.map((method, i) => {
                                         return <MenuItem style={itemStyle} value={i} key={`method-${i}`}>{method}</MenuItem>
                                     })}
-
                                 </Select>
                             </FormControl>
                             <FormControl className="form-control">
@@ -117,9 +125,22 @@ class Prayer extends React.Component {
                                     {Period.map((period, i) => {
                                         return <MenuItem style={itemStyle} value={i} key={`period-${i}`}>{period}</MenuItem>
                                     })}
-
                                 </Select>
                             </FormControl>
+                            <TextField
+                                id="search"
+                                label="Search (optional)"
+                                type="search"
+                                margin="normal"
+                                style={{fontSize: "0.8em"}}
+                                onChange={this.handleInput}
+                                onKeyPress={(e) => {
+                                    if (e.key === "Enter") {
+                                        this.listPrayer();
+                                        e.preventDefault()
+                                    }
+                                }}
+                            />
                         </form>
                     </div>
                     <div id="table"></div>
