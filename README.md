@@ -3,7 +3,7 @@
 Web app for looking up local prayer times
 
 ## Live Demo
-Soon
+[Demo](https://aboudicheng.github.io/Time-to-Pray/)
 
 ## Installation
 Install [Node.js](https://nodejs.org/en/)
@@ -25,3 +25,4 @@ npm start
 * [ReactJS](https://reactjs.org/)
 * [Material-UI](https://material-ui.com/)
 * [Prayer Times API](https://aladhan.com/prayer-times-api)
+* [react-geolocated](https://github.com/no23reason/react-geolocated)
