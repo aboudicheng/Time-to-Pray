@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import Timetable from '../Table/table'
 import { geolocated } from 'react-geolocated';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import purple from '@material-ui/core/colors/purple';
@@ -12,14 +13,6 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
-
-//Table
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
 
 import './prayer.css';
 
@@ -37,18 +30,21 @@ class Prayer extends React.Component {
             day: currentDate.getDate(),
             month: currentDate.getMonth() + 1,
             year: currentDate.getFullYear(),
-            method: 2,
+            method: 3,
             period: 0,
             prayerTime: null,
         }
     }
 
-    fetchPrayer(link) {
+    fetchPrayer = (link) => {
         fetch(link)
             .then(handleResponse)
             .then((data) => {
-                this.setState({ prayerTime: data })
-            })
+                this.setState((prevState) => {
+                    return { prayerTime: data }
+                })
+                ReactDOM.render(<Timetable prayerTime={data} day={this.state.day} />, document.getElementById("table"))
+            });
     }
 
     componentWillReceiveProps(nextProps) {
@@ -60,7 +56,7 @@ class Prayer extends React.Component {
                     ? this.setState({ geolocation: nextProps.coords, isLoading: false })
                     : this.setState({ error: null })
 
-        this.fetchPrayer(`${API}?latitude=${nextProps.coords.latitude}&longitude=${nextProps.coords.longitude}&method=2&month=${this.state.month}&year=${this.state.year}`)
+        this.fetchPrayer(`${API}?latitude=${nextProps.coords.latitude}&longitude=${nextProps.coords.longitude}&method=${this.state.method}&month=${this.state.month}&year=${this.state.year}`)
     }
 
     handleChange = event => {
@@ -70,56 +66,14 @@ class Prayer extends React.Component {
     listPrayer = () => {
         this.fetchPrayer(`${API}?latitude=${this.state.geolocation.latitude}&longitude=${this.state.geolocation.longitude}&method=${this.state.method}&month=${this.state.month}&year=${this.state.year}`)
 
-        const Timetable = () => {
-
-            let id = 0;
-            function createData(name, time) {
-                id += 1;
-                return { id, name, time };
-            }
-
-            const data = [
-                createData("Fajr", this.state.prayerTime.data[this.state.day - 1].timings.Fajr),
-                createData("Dhuhr", this.state.prayerTime.data[this.state.day - 1].timings.Dhuhr),
-                createData("Asr", this.state.prayerTime.data[this.state.day - 1].timings.Asr),
-                createData("Maghrib", this.state.prayerTime.data[this.state.day - 1].timings.Maghrib),
-                createData("Isha", this.state.prayerTime.data[this.state.day - 1].timings.Isha),
-            ];
-
-            return (
-                <Paper style={{ width: '100%', overflowX: 'auto', }}>
-                    <Table>
-                        <TableHead>
-                            <TableRow>
-                                <TableCell>Prayer</TableCell>
-                                <TableCell numeric>Time</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {data.map(n => {
-                                return (
-                                    <TableRow key={n.id}>
-                                        <TableCell component="th" scope="row">
-                                            {n.name}
-                                        </TableCell>
-                                        <TableCell numeric>{n.time}</TableCell>
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                </Paper>
-            );
-        }
-
-        ReactDOM.render(<Timetable />, document.getElementById("table"))
+        // ReactDOM.render(<Timetable prayerTime={this.state.prayerTime} day={this.state.day} />, document.getElementById("table"))
     }
 
     render() {
         const { isLoading } = this.state
 
         const selectStyle = {
-            width: "60%",
+            width: "50%",
             fontSize: "0.8em",
         }
 
@@ -169,13 +123,13 @@ class Prayer extends React.Component {
                             </FormControl>
                         </form>
                     </div>
+                    <div id="table"></div>
                     <div className="submit">
                         {isLoading
                             ? <CircularProgress style={{ color: purple[500] }} thickness={7} />
-                            : <Button onClick={this.listPrayer} variant="contained" color="primary" size="small">List</Button>
+                            : <Button onClick={this.listPrayer} variant="contained" color="primary" size="medium">find</Button>
                         }
                     </div>
-                    <div id="table"></div>
                 </div>
             </div>
         )
