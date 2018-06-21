@@ -1,4 +1,6 @@
+
 # Time to Pray
+Web app for looking up local prayer times
 
 ## Live Demo
 Soon
