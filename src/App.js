@@ -10,6 +10,11 @@ class App extends Component {
           <h1>Time to Pray</h1>
         </header>
         <Prayer />
+        <footer className="App-footer">
+          <p>
+            by <a href="https://github.com/aboudicheng/" target="_blank" >Ping Cheng</a>
+          </p>
+        </footer>
       </div>
     );
   }
