@@ -12,7 +12,7 @@ class App extends Component {
         <Prayer />
         <footer className="App-footer">
           <p>
-            by <a href="https://github.com/aboudicheng/" target="_blank" >Ping Cheng</a>
+            by <a href="https://github.com/aboudicheng/" target="_blank" rel="noopener noreferrer">Ping Cheng</a>
           </p>
         </footer>
       </div>
