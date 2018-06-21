@@ -67,9 +67,9 @@ class Prayer extends React.Component {
 
     listPrayer = () => {
         if (this.state.address !== "")
-            this.fetchPrayer(`${PRAYER_API}ByAddress?address=${this.state.address}&method=${this.state.method}&month=${this.state.month}&year=${this.state.year}`)
+            this.fetchPrayer(`${PRAYER_API}ByAddress?address=${this.state.address}&method=${this.state.method}&month=${date.month}&year=${date.year}`)
         else
-            this.fetchPrayer(`${PRAYER_API}?latitude=${this.state.geolocation.latitude}&longitude=${this.state.geolocation.longitude}&method=${this.state.method}&month=${this.state.month}&year=${this.state.year}`)
+            this.fetchPrayer(`${PRAYER_API}?latitude=${this.state.geolocation.latitude}&longitude=${this.state.geolocation.longitude}&method=${this.state.method}&month=${date.month}&year=${date.year}`)
     }
 
     handleInput = (e) => {
