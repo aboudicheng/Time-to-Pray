@@ -51,14 +51,12 @@ class Prayer extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         !nextProps.isGeolocationAvailable
-            ? this.setState({ error: "Your browser does not support Geolocation" })
+            ? this.setState({ error: "Your browser does not support Geolocation", isLoading: false })
             : !nextProps.isGeolocationEnabled
-                ? this.setState({ error: "Geolocation is not enabled" })
+                ? this.setState({ error: "Geolocation is not enabled", isLoading: false })
                 : nextProps.coords
                     ? this.setState({ geolocation: nextProps.coords, isLoading: false })
                     : this.setState({ error: null })
-
-        this.fetchPrayer(`${API}?latitude=${nextProps.coords.latitude}&longitude=${nextProps.coords.longitude}&method=${this.state.method}&month=${this.state.month}&year=${this.state.year}`)
     }
 
     handleChange = event => {
@@ -128,7 +126,9 @@ class Prayer extends React.Component {
                     <div className="submit">
                         {isLoading
                             ? <CircularProgress style={{ color: purple[500] }} thickness={7} />
-                            : <Button onClick={this.listPrayer} variant="contained" color="primary" size="medium">find</Button>
+                            : !this.state.error
+                                ? <Button onClick={this.listPrayer} variant="contained" color="primary" size="medium">find</Button>
+                                : this.state.error
                         }
                     </div>
                 </div>
