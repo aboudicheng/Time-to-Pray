@@ -22,8 +22,6 @@ class Timetable extends React.Component {
             createData(4, "Isha", props.prayerTime.data[props.day - 1].timings.Isha),
         ];
 
-        console.log(props)
-
         this.state = {
             id: 0,
             data: data,
