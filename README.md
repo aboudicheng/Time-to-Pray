@@ -1,9 +1,9 @@
-#Time to Pray
+# Time to Pray
 
-##Live Demo
+## Live Demo
 Soon
 
-##Installation
+## Installation
 Install [Node.js](https://nodejs.org/en/)
 ```bash
 #clone from git repository
@@ -19,7 +19,7 @@ npm install
 npm start
 ```
 
-##Tools
+## Tools
 * [ReactJS](https://reactjs.org/)
 * [Material-UI](https://material-ui.com/)
 * [Prayer Times API](https://aladhan.com/prayer-times-api)
