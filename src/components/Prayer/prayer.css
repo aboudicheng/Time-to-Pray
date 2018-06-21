@@ -2,7 +2,7 @@
 
 .prayer-container {
     font-family: 'Oxygen', sans-serif;
-    width: 20rem;
+    width: 100%;
     background-color: #81e37c;
     border-radius: 5px;
     border-style: solid;
@@ -10,15 +10,24 @@
 }
 
 .content {
-    margin: 0.8rem;
+    padding: 0.8em;
+}
+
+.select-table {
+    display: flex;
+    align-items: center;
+    flex-flow: row wrap;
+    margin-bottom: 2em;
 }
 
 .form-control {
-    font-size: 1.8em;
+    max-width: 12em;
+    margin-bottom: 2em;
 }
 
-.geolocation {
+.submit {
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: 2em;
 }

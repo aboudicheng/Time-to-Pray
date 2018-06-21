@@ -1,8 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 
 .App {
-  max-width: 20em;
-  
+  width: 100%;
 }
 
 .App-header {
