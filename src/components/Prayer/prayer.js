@@ -17,6 +17,11 @@ import Button from '@material-ui/core/Button';
 import './prayer.css';
 
 const currentDate = new Date();
+const date = {
+    day: currentDate.getDate(),
+    month: currentDate.getMonth() + 1,
+    year: currentDate.getFullYear(),
+}
 
 class Prayer extends React.Component {
     constructor() {
@@ -27,9 +32,6 @@ class Prayer extends React.Component {
             geolocation: null,
             error: "",
             isLoading: true,
-            day: currentDate.getDate(),
-            month: currentDate.getMonth() + 1,
-            year: currentDate.getFullYear(),
             method: 3,
             period: 0,
             prayerTime: null,
@@ -43,7 +45,7 @@ class Prayer extends React.Component {
                 this.setState((prevState) => {
                     return { prayerTime: data }
                 })
-                ReactDOM.render(<Timetable prayerTime={data} day={this.state.day} />, document.getElementById("table"))
+                ReactDOM.render(<Timetable prayerTime={data} day={date.day} />, document.getElementById("table"))
             });
     }
 
@@ -65,16 +67,15 @@ class Prayer extends React.Component {
 
     listPrayer = () => {
         this.fetchPrayer(`${API}?latitude=${this.state.geolocation.latitude}&longitude=${this.state.geolocation.longitude}&method=${this.state.method}&month=${this.state.month}&year=${this.state.year}`)
-
-        // ReactDOM.render(<Timetable prayerTime={this.state.prayerTime} day={this.state.day} />, document.getElementById("table"))
     }
 
     render() {
         const { isLoading } = this.state
 
         const selectStyle = {
-            width: "50%",
-            fontSize: "0.8em",
+            width: "100%",
+            fontSize: "0.6em",
+            marginBottom: "1.2em"
         }
 
         const itemStyle = {
@@ -86,9 +87,9 @@ class Prayer extends React.Component {
             <div className="prayer-container">
                 <div className="content">
                     <div className="select-table">
-                        <form style={{ display: "flex", flexWrap: "wrap" }} autoComplete="off">
+                        <form style={{ display: "flex", flexFlow: "column wrap" }} autoComplete="off">
                             <FormControl className="form-control">
-                                <InputLabel htmlFor="method-simple">Calculation Method</InputLabel>
+                                <InputLabel htmlFor="method-simple"><div style={itemStyle}>Calculation Method</div></InputLabel>
                                 <Select
                                     value={this.state.method}
                                     onChange={this.handleChange}
@@ -99,13 +100,13 @@ class Prayer extends React.Component {
                                     style={selectStyle}
                                 >
                                     {Methods.map((method, i) => {
-                                        return <MenuItem style={itemStyle} value={i}>{method}</MenuItem>
+                                        return <MenuItem style={itemStyle} value={i} key={`method-${i}`}>{method}</MenuItem>
                                     })}
 
                                 </Select>
                             </FormControl>
                             <FormControl className="form-control">
-                                <InputLabel htmlFor="period-simple">Period</InputLabel>
+                                <InputLabel htmlFor="period-simple"><div style={itemStyle}>Period</div></InputLabel>
                                 <Select
                                     value={this.state.period}
                                     onChange={this.handleChange}
@@ -113,10 +114,10 @@ class Prayer extends React.Component {
                                         name: 'period',
                                         id: 'period-simple',
                                     }}
-                                    style={{ fontSize: "0.8em", width: "100%" }}
+                                    style={selectStyle}
                                 >
                                     {Period.map((period, i) => {
-                                        return <MenuItem style={itemStyle} value={i}>{period}</MenuItem>
+                                        return <MenuItem style={itemStyle} value={i} key={`period-${i}`}>{period}</MenuItem>
                                     })}
 
                                 </Select>

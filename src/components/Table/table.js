@@ -48,7 +48,7 @@ class Timetable extends React.Component {
                     <TableHead>
                         <TableRow>
                             <TableCell>Prayer</TableCell>
-                            <TableCell numeric>Time</TableCell>
+                            <TableCell numeric>Time (timezone)</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>

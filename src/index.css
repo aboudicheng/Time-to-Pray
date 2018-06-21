@@ -7,6 +7,6 @@ html {
 body {
   display: flex;
   justify-content: center;
-  background-image: linear-gradient(236deg, #74ebd5, #acb6e5);
+  background-image: linear-gradient(236deg, #cfffea, #afffe1);
   height: 100vh;
 }
