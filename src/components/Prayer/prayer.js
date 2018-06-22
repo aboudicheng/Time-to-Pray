@@ -5,7 +5,7 @@ import { geolocated } from 'react-geolocated';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import purple from '@material-ui/core/colors/purple';
-import { PRAYER_API, Methods} from '../../config'
+import { PRAYER_API } from '../../config'
 import { handleResponse } from '../../helpers'
 
 //Select
@@ -39,7 +39,7 @@ class Prayer extends React.Component {
             geolocation: null,
             error: "",
             isLoading: true,
-            method: 3,
+            method: 2,
             period: 0,
             prayerTime: null,
             address: "",
@@ -80,7 +80,10 @@ class Prayer extends React.Component {
                 break;
             case 1:
                 setLanguage('zh')
-                break
+                break;
+            case 2:
+                setLanguage('zh_cn')
+                break;
             default:
                 return null;
         }
@@ -113,7 +116,10 @@ class Prayer extends React.Component {
             whiteSpace: "nowrap"
         }
 
+        //selections
+        const method_select = [t('methods.uisk'), t('methods.isna'), t('methods.mwl'), t('methods.uaqum'), t('methods.egas'), t('methods.igut'), t('methods.gr'), t('methods.kw'), t('methods.qt'), t('methods.muiss'), t('methods.uoidf'), t('methods.dibt')]
         const period_select = [t('period_select.today'), t('period_select.this_week'), t('period_select.this_month')];
+        const lang_select = [t('languages.en'), t('languages.zh'), t('languages.zh_cn')]
 
         return (
             <div className="prayer-container">
@@ -131,7 +137,7 @@ class Prayer extends React.Component {
                                     }}
                                     style={selectStyle}
                                 >
-                                    {Methods.map((method, i) => {
+                                    {method_select.map((method, i) => {
                                         return <MenuItem style={itemStyle} value={i} key={`method-${i}`}>{method}</MenuItem>
                                     })}
                                 </Select>
@@ -163,8 +169,9 @@ class Prayer extends React.Component {
                                     }}
                                     style={selectStyle}
                                 >
-                                    <MenuItem style={itemStyle} value={0}>{t('languages.en')}</MenuItem>
-                                    <MenuItem style={itemStyle} value={1}>{t('languages.zh')}</MenuItem>
+                                    {lang_select.map((lang, i) => {
+                                        return <MenuItem style={itemStyle} value={i} key={`lang-${i}`}>{lang}</MenuItem>
+                                    })}
                                 </Select>
                             </FormControl>
                             <TextField
