@@ -2,7 +2,7 @@
 
 .prayer-container {
     font-family: 'Oxygen', sans-serif;
-    width: 100%;
+    width: 80vw;
     background-color: #ffdaee;
     border-radius: 5px;
     border-style: solid;
@@ -31,4 +31,12 @@
     align-items: center;
     justify-content: center;
     margin-top: 2em;
+}
+
+.error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2em;
+    color: #ff3333;
 }

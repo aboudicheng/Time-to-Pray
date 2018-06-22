@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import Timetable from '../Table/table'
 import { geolocated } from 'react-geolocated';
 import TextField from '@material-ui/core/TextField';
+import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import purple from '@material-ui/core/colors/purple';
 import { PRAYER_API } from '../../config'
@@ -30,6 +31,18 @@ const date = {
     year: currentDate.getFullYear(),
 }
 
+const styles = theme => ({
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: "55vw",
+    },
+    button: {
+        margin: theme.spacing.unit,
+        fontSize: "0.7em"
+      },
+});
+
 class Prayer extends React.Component {
     constructor(props) {
         super(props);
@@ -37,7 +50,8 @@ class Prayer extends React.Component {
         this.state = {
             currentDate: null,
             geolocation: null,
-            error: "",
+            error: "", //for geolocation
+            errorMessage: "", //for fetching prayer data
             isLoading: true,
             method: 2,
             period: 0,
@@ -52,9 +66,14 @@ class Prayer extends React.Component {
             .then(handleResponse)
             .then((data) => {
                 this.setState((prevState) => {
-                    return { prayerTime: data }
+                    return { prayerTime: data, errorMessage: "" }
                 })
                 ReactDOM.render(<Timetable prayerTime={data} day={date.day} />, document.getElementById("table"))
+            })
+            .catch((error) => {
+                this.setState({
+                    errorMessage: error.data
+                })
             });
     }
 
@@ -106,7 +125,7 @@ class Prayer extends React.Component {
         const { t } = this.props
 
         const selectStyle = {
-            width: "100%",
+            width: "70vw",
             fontSize: "0.6em",
             marginBottom: "1.2em"
         }
@@ -179,7 +198,13 @@ class Prayer extends React.Component {
                                 label={t('search_any_place')}
                                 type="search"
                                 margin="normal"
-                                style={{ fontSize: "0.8em" }}
+                                className={this.props.classes.textField}
+                                inputProps={{
+                                    style: { fontSize: "0.7rem" }
+                                }}
+                                InputLabelProps={{
+                                    style: { fontSize: "0.7rem", whiteSpace: "nowrap" }
+                                }}
                                 onChange={this.handleInput}
                                 onKeyPress={(e) => {
                                     if (e.key === "Enter") {
@@ -195,9 +220,12 @@ class Prayer extends React.Component {
                         {isLoading
                             ? <CircularProgress style={{ color: purple[500] }} thickness={7} />
                             : !this.state.error
-                                ? <Button onClick={this.listPrayer} variant="contained" color="primary" size="medium">{t('search')}</Button>
+                                ? <Button onClick={this.listPrayer} className={this.props.classes.button} variant="contained" color="primary" size="medium">{t('search')}</Button>
                                 : this.state.error
                         }
+                    </div>
+                    <div className="error">
+                        {this.state.errorMessage !== "" && this.state.errorMessage}
                     </div>
                 </div>
             </div>
@@ -205,9 +233,9 @@ class Prayer extends React.Component {
     }
 }
 
-export default geolocated({
+export default withStyles(styles)(geolocated({
     positionOptions: {
         enableHighAccuracy: false,
     },
     userDecisionTimeout: 5000,
-})(translate(Prayer));
+})(translate(Prayer)));
