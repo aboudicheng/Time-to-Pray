@@ -24,7 +24,7 @@ export const zh_cn = {
     },
     period: "时段",
     period_select: {
-        today: "今天",
+        today: "今",
         this_week: "本星期",
         this_month: "本月",
     },
