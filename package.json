@@ -9,7 +9,8 @@
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "react-geolocated": "^2.4.0",
-    "react-scripts": "1.1.4"
+    "react-scripts": "1.1.4",
+    "react-switch-lang": "^0.5.1"
   },
   "scripts": {
     "start": "react-scripts start",

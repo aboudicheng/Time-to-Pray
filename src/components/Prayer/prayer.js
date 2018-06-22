@@ -5,7 +5,7 @@ import { geolocated } from 'react-geolocated';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import purple from '@material-ui/core/colors/purple';
-import { PRAYER_API, Methods, Period } from '../../config'
+import { PRAYER_API, Methods} from '../../config'
 import { handleResponse } from '../../helpers'
 
 //Select
@@ -14,6 +14,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Button from '@material-ui/core/Button';
+
+//Translation
+import {
+    setLanguage,
+    translate,
+} from 'react-switch-lang';
 
 import './prayer.css';
 
@@ -25,8 +31,8 @@ const date = {
 }
 
 class Prayer extends React.Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
 
         this.state = {
             currentDate: null,
@@ -37,6 +43,7 @@ class Prayer extends React.Component {
             period: 0,
             prayerTime: null,
             address: "",
+            language: 0,
         }
     }
 
@@ -65,6 +72,20 @@ class Prayer extends React.Component {
         this.setState({ [event.target.name]: event.target.value });
     };
 
+    handleLangChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+        switch (event.target.value) {
+            case 0:
+                setLanguage('en')
+                break;
+            case 1:
+                setLanguage('zh')
+                break
+            default:
+                return null;
+        }
+    }
+
     listPrayer = () => {
         if (this.state.address !== "")
             this.fetchPrayer(`${PRAYER_API}ByAddress?address=${this.state.address}&method=${this.state.method}&month=${date.month}&year=${date.year}`)
@@ -73,11 +94,13 @@ class Prayer extends React.Component {
     }
 
     handleInput = (e) => {
-        this.setState({ address: e.target.value})
+        this.setState({ address: e.target.value })
     }
 
     render() {
         const { isLoading } = this.state
+
+        const { t } = this.props
 
         const selectStyle = {
             width: "100%",
@@ -90,13 +113,15 @@ class Prayer extends React.Component {
             whiteSpace: "nowrap"
         }
 
+        const period_select = [t('period_select.today'), t('period_select.this_week'), t('period_select.this_month')];
+
         return (
             <div className="prayer-container">
                 <div className="content">
                     <div className="select-table">
                         <form style={{ display: "flex", flexFlow: "column wrap" }} autoComplete="off">
                             <FormControl className="form-control">
-                                <InputLabel htmlFor="method-simple"><div style={itemStyle}>Calculation Method</div></InputLabel>
+                                <InputLabel htmlFor="method-simple"><div style={itemStyle}>{t('calculation_method')}</div></InputLabel>
                                 <Select
                                     value={this.state.method}
                                     onChange={this.handleChange}
@@ -112,7 +137,7 @@ class Prayer extends React.Component {
                                 </Select>
                             </FormControl>
                             <FormControl className="form-control">
-                                <InputLabel htmlFor="period-simple"><div style={itemStyle}>Period</div></InputLabel>
+                                <InputLabel htmlFor="period-simple"><div style={itemStyle}>{t('period')}</div></InputLabel>
                                 <Select
                                     value={this.state.period}
                                     onChange={this.handleChange}
@@ -122,17 +147,32 @@ class Prayer extends React.Component {
                                     }}
                                     style={selectStyle}
                                 >
-                                    {Period.map((period, i) => {
+                                    {period_select.map((period, i) => {
                                         return <MenuItem style={itemStyle} value={i} key={`period-${i}`}>{period}</MenuItem>
                                     })}
                                 </Select>
                             </FormControl>
+                            <FormControl className="form-control">
+                                <InputLabel htmlFor="period-simple"><div style={itemStyle}>{t('language_select')}</div></InputLabel>
+                                <Select
+                                    value={this.state.language}
+                                    onChange={this.handleLangChange}
+                                    inputProps={{
+                                        name: 'language',
+                                        id: 'language-simple',
+                                    }}
+                                    style={selectStyle}
+                                >
+                                    <MenuItem style={itemStyle} value={0}>{t('languages.en')}</MenuItem>
+                                    <MenuItem style={itemStyle} value={1}>{t('languages.zh')}</MenuItem>
+                                </Select>
+                            </FormControl>
                             <TextField
                                 id="search"
-                                label="Search (optional)"
+                                label={t('search_any_place')}
                                 type="search"
                                 margin="normal"
-                                style={{fontSize: "0.8em"}}
+                                style={{ fontSize: "0.8em" }}
                                 onChange={this.handleInput}
                                 onKeyPress={(e) => {
                                     if (e.key === "Enter") {
@@ -148,7 +188,7 @@ class Prayer extends React.Component {
                         {isLoading
                             ? <CircularProgress style={{ color: purple[500] }} thickness={7} />
                             : !this.state.error
-                                ? <Button onClick={this.listPrayer} variant="contained" color="primary" size="medium">find</Button>
+                                ? <Button onClick={this.listPrayer} variant="contained" color="primary" size="medium">{t('search')}</Button>
                                 : this.state.error
                         }
                     </div>
@@ -163,4 +203,4 @@ export default geolocated({
         enableHighAccuracy: false,
     },
     userDecisionTimeout: 5000,
-})(Prayer);
+})(translate(Prayer));
