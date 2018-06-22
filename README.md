@@ -26,3 +26,4 @@ npm start
 * [Material-UI](https://material-ui.com/)
 * [Prayer Times API](https://aladhan.com/prayer-times-api)
 * [react-geolocated](https://github.com/no23reason/react-geolocated)
+* [react-switch-lang](https://github.com/narinrit/react-switch-lang)
