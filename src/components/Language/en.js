@@ -29,7 +29,7 @@ export const en = {
         this_month: "This month",
     },
     language_select: "Language",
-    search_any_place: "Search any place (optional)",
+    search_any_place: "Search anywhere (optional)",
     search: "search",
     prayers: {
         fajr: "Fajr",

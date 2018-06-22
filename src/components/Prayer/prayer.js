@@ -35,7 +35,7 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: "55vw",
+        width: "70vw",
     },
     button: {
         margin: theme.spacing.unit,
@@ -203,7 +203,7 @@ class Prayer extends React.Component {
                                     style: { fontSize: "0.7rem" }
                                 }}
                                 InputLabelProps={{
-                                    style: { fontSize: "0.7rem", whiteSpace: "nowrap" }
+                                    style: { fontSize: "0.6rem" }
                                 }}
                                 onChange={this.handleInput}
                                 onKeyPress={(e) => {
