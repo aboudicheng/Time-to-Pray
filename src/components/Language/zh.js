@@ -22,6 +22,10 @@ export const zh = {
         uoidf: "法國伊斯蘭聯盟組織",
         dibt: "宗教事務局代表團，土耳其"
     },
+    error: {
+        browser: "您的瀏覽器不支援地理位置功能",
+        enable: "您尚未啟用地理位置功能"
+    },
     period: "時段",
     period_select: {
         today: "今日",

@@ -35,7 +35,7 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: "70vw",
+        width: 250,
     },
     button: {
         margin: theme.spacing.unit,
@@ -79,9 +79,9 @@ class Prayer extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         !nextProps.isGeolocationAvailable
-            ? this.setState({ error: "Your browser does not support Geolocation", isLoading: false })
+            ? this.setState({ error: this.props.t('error.browser'), isLoading: false })
             : !nextProps.isGeolocationEnabled
-                ? this.setState({ error: "Geolocation is not enabled", isLoading: false })
+                ? this.setState({ error: this.props.t('error.enable'), isLoading: false })
                 : nextProps.coords
                     ? this.setState({ geolocation: nextProps.coords, isLoading: false })
                     : this.setState({ error: null })
@@ -125,7 +125,7 @@ class Prayer extends React.Component {
         const { t } = this.props
 
         const selectStyle = {
-            width: "70vw",
+            width: 250,
             fontSize: "0.6em",
             marginBottom: "1.2em"
         }
@@ -221,11 +221,8 @@ class Prayer extends React.Component {
                             ? <CircularProgress style={{ color: purple[500] }} thickness={7} />
                             : !this.state.error
                                 ? <Button onClick={this.listPrayer} className={this.props.classes.button} variant="contained" color="primary" size="medium">{t('search')}</Button>
-                                : this.state.error
+                                : <div className="error">{this.state.error}</div>
                         }
-                    </div>
-                    <div className="error">
-                        {this.state.errorMessage !== "" && this.state.errorMessage}
                     </div>
                 </div>
             </div>

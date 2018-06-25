@@ -22,6 +22,10 @@ export const zh_cn = {
         uoidf: "法国伊斯兰联盟组织",
         dibt: "宗教事务局代表团，土耳其"
     },
+    error: {
+        browser: "您的浏览器不支援地理位置功能",
+        enable: "您尚未启用地理位置功能"
+    },
     period: "时段",
     period_select: {
         today: "今日",

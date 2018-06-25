@@ -22,6 +22,10 @@ export const en = {
         uoidf: "Union Organization islamic de France",
         dibt: "Diyanet İşleri Başkanlığı, Turkey"
     },
+    error: {
+        browser: "Your browser does not support Geolocation",
+        enable: "Geolocation is not enabled"
+    },
     period: "Period",
     period_select: {
         today: "Today",
