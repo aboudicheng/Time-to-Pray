@@ -39,7 +39,13 @@ const styles = theme => ({
     },
     button: {
         margin: theme.spacing.unit,
-        fontSize: "0.7em"
+        fontSize: "0.7em",
+        backgroundColor: "#1D2D3C",
+        color: "#B4D27C",
+        '&:hover': {
+            background: '#879F4B',
+            color: "#1D2D3C",
+          }
       },
 });
 
@@ -133,6 +139,11 @@ class Prayer extends React.Component {
         const itemStyle = {
             fontSize: "0.8em",
             whiteSpace: "nowrap",
+        }
+
+        const itemSelectStyle = {
+            fontSize: "0.8em",
+            whiteSpace: "nowrap",
             overflowX: "auto"
         }
 
@@ -158,7 +169,7 @@ class Prayer extends React.Component {
                                     style={selectStyle}
                                 >
                                     {method_select.map((method, i) => {
-                                        return <MenuItem style={itemStyle} value={i} key={`method-${i}`}>{method}</MenuItem>
+                                        return <MenuItem style={itemSelectStyle} value={i} key={`method-${i}`}>{method}</MenuItem>
                                     })}
                                 </Select>
                             </FormControl>
@@ -174,7 +185,7 @@ class Prayer extends React.Component {
                                     style={selectStyle}
                                 >
                                     {period_select.map((period, i) => {
-                                        return <MenuItem style={itemStyle} value={i} key={`period-${i}`}>{period}</MenuItem>
+                                        return <MenuItem style={itemSelectStyle} value={i} key={`period-${i}`}>{period}</MenuItem>
                                     })}
                                 </Select>
                             </FormControl>
@@ -190,7 +201,7 @@ class Prayer extends React.Component {
                                     style={selectStyle}
                                 >
                                     {lang_select.map((lang, i) => {
-                                        return <MenuItem style={itemStyle} value={i} key={`lang-${i}`}>{lang}</MenuItem>
+                                        return <MenuItem style={itemSelectStyle} value={i} key={`lang-${i}`}>{lang}</MenuItem>
                                     })}
                                 </Select>
                             </FormControl>
@@ -216,12 +227,12 @@ class Prayer extends React.Component {
                             />
                         </form>
                     </div>
-                    <div id="table"></div>
+                    
                     <div className="submit">
                         {isLoading
                             ? <CircularProgress style={{ color: purple[500] }} thickness={7} />
                             : !this.state.error
-                                ? <Button onClick={this.listPrayer} className={this.props.classes.button} variant="contained" color="primary" size="medium">{t('search')}</Button>
+                                ? <Button onClick={this.listPrayer} className={this.props.classes.button} variant="outlined" size="medium">{t('search')}</Button>
                                 : <div className="error">{this.state.error}</div>
                         }
                     </div>

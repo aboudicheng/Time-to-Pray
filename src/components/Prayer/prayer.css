@@ -3,11 +3,12 @@
 .prayer-container {
     font-family: 'Oxygen', sans-serif;
     width: 300px;
-    background-color: #ffdaee;
+    background-color: #B4D27C;
     border-radius: 5px;
     border-style: solid;
     border-width: 1px;
     box-shadow: 0 0 40px 0px rgba(0, 0, 0, 0.472);
+    margin: 0 auto;
 }
 
 .content {

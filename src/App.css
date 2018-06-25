@@ -9,7 +9,7 @@
 .App-header {
   text-align: center;
   font-family: 'Roboto Condensed', sans-serif;
-  color:#9aa2cf;
+  color:#879F4B;
   align-items: center;
   display: flex;
   justify-content: center;
@@ -20,4 +20,9 @@
   font-family: 'Oxygen', sans-serif;
   font-size: 0.8em;
   margin: 2em auto;
+}
+
+#table {
+  margin-top: 2em;
+  width: 80vw;
 }

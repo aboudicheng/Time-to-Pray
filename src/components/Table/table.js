@@ -54,20 +54,22 @@ class Timetable extends React.Component {
                     <TableHead>
                         <TableRow>
                             <TableCell>{this.state.t('prayer')}</TableCell>
-                            <TableCell numeric>{this.state.t('time_timezone')}</TableCell>
+                            {data.map(n => {
+                                return (
+                                    <TableCell key={n.id}>{n.name}</TableCell>
+                                )
+                            })}
                         </TableRow>
                     </TableHead>
                     <TableBody>
+                        <TableRow component="th" scope="row">
+                            <TableCell>{this.state.t('time_timezone')}</TableCell>
                         {data.map(n => {
                             return (
-                                <TableRow key={n.id}>
-                                    <TableCell component="th" scope="row">
-                                        {n.name}
-                                    </TableCell>
-                                    <TableCell numeric>{n.time}</TableCell>
-                                </TableRow>
+                                <TableCell numeric>{n.time}</TableCell>
                             );
                         })}
+                        </TableRow>
                     </TableBody>
                 </Table>
             </Paper>

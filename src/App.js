@@ -27,6 +27,7 @@ class App extends Component {
           <h1>{t('header')}</h1>
         </header>
         <Prayer />
+        <div id="table"></div>
         <footer className="App-footer">
           <p>
             {t('made_by')} <a href="https://github.com/aboudicheng/" target="_blank" rel="noopener noreferrer">{t('ping_cheng')}</a>
