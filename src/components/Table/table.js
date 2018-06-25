@@ -5,6 +5,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
 
 //Translation
 import { translate } from 'react-switch-lang';
@@ -12,6 +13,29 @@ import { translate } from 'react-switch-lang';
 const createData = (id, name, time) => {
     return { id, name, time }
 }
+
+const CustomTableCell = withStyles(theme => ({
+    head: {
+        backgroundColor: theme.palette.common.black,
+        color: theme.palette.common.white,
+    },
+}))(TableCell);
+
+const styles = theme => ({
+    root: {
+        width: '100%',
+        marginTop: theme.spacing.unit * 3,
+        overflowX: 'auto',
+    },
+    table: {
+        minWidth: 700,
+    },
+    row: {
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.background.default,
+        },
+    },
+});
 
 class Timetable extends React.Component {
     constructor(props) {
@@ -47,28 +71,29 @@ class Timetable extends React.Component {
 
     render() {
         const { data } = this.state
+        const { classes } = this.props
 
         return (
-            <Paper style={{ width: '100%', overflowX: 'auto', }}>
-                <Table>
+            <Paper className={classes.root}>
+                <Table className={classes.table}>
                     <TableHead>
                         <TableRow>
-                            <TableCell>{this.state.t('prayer')}</TableCell>
+                            <CustomTableCell>{this.state.t('prayer')}</CustomTableCell>
                             {data.map(n => {
                                 return (
-                                    <TableCell key={n.id}>{n.name}</TableCell>
+                                    <CustomTableCell key={n.id}>{n.name}</CustomTableCell>
                                 )
                             })}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         <TableRow component="th" scope="row">
-                            <TableCell>{this.state.t('time_timezone')}</TableCell>
-                        {data.map(n => {
-                            return (
-                                <TableCell numeric>{n.time}</TableCell>
-                            );
-                        })}
+                            <CustomTableCell>{this.state.t('time_timezone')}</CustomTableCell>
+                            {data.map((n, i) => {
+                                return (
+                                    <CustomTableCell numeric key={i}>{n.time}</CustomTableCell>
+                                );
+                            })}
                         </TableRow>
                     </TableBody>
                 </Table>
@@ -79,4 +104,4 @@ class Timetable extends React.Component {
 
 }
 
-export default translate(Timetable);
+export default withStyles(styles)(translate(Timetable));
