@@ -74,7 +74,7 @@ class Prayer extends React.Component {
                 this.setState((prevState) => {
                     return { prayerTime: data, errorMessage: "" }
                 })
-                ReactDOM.render(<Timetable prayerTime={data} day={date.day} />, document.getElementById("table"))
+                ReactDOM.render(<Timetable prayerTime={data} month={date.month} day={date.day} period={this.state.period} />, document.getElementById("table"))
             })
             .catch((error) => {
                 this.setState({
@@ -149,7 +149,7 @@ class Prayer extends React.Component {
 
         //selections
         const method_select = [t('methods.uisk'), t('methods.isna'), t('methods.mwl'), t('methods.uaqum'), t('methods.egas'), t('methods.igut'), t('methods.gr'), t('methods.kw'), t('methods.qt'), t('methods.muiss'), t('methods.uoidf'), t('methods.dibt')]
-        const period_select = [t('period_select.today'), t('period_select.this_week'), t('period_select.this_month')];
+        const period_select = [t('period_select.today'), t('period_select.this_month')];
         const lang_select = [t('languages.en'), t('languages.zh'), t('languages.zh_cn')]
 
         return (
@@ -190,7 +190,7 @@ class Prayer extends React.Component {
                                 </Select>
                             </FormControl>
                             <FormControl className="form-control">
-                                <InputLabel htmlFor="period-simple"><div style={itemStyle}>{t('language_select')}</div></InputLabel>
+                                <InputLabel htmlFor="language-simple"><div style={itemStyle}>{t('language_select')}</div></InputLabel>
                                 <Select
                                     value={this.state.language}
                                     onChange={this.handleLangChange}

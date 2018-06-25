@@ -29,6 +29,7 @@ export const zh = {
     period: "時段",
     period_select: {
         today: "今日",
+        tomorrow: "明日",
         this_week: "本星期",
         this_month: "本月",
     },
@@ -42,6 +43,6 @@ export const zh = {
         maghrib: "昏禮",
         isha: "宵禮"
     },
-    prayer: "禮拜",
+    date: "日期",
     time_timezone: "時間 (時區)",
 }

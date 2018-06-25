@@ -29,6 +29,7 @@ export const en = {
     period: "Period",
     period_select: {
         today: "Today",
+        tomorrow: "Tomorrow",
         this_week: "This week",
         this_month: "This month",
     },
@@ -42,6 +43,6 @@ export const en = {
         maghrib: "Maghrib",
         isha: "Isha"
     },
-    prayer: "Prayer",
+    date: "Date",
     time_timezone: "Time (timezone)",
 }
