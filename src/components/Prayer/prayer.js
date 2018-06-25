@@ -132,7 +132,8 @@ class Prayer extends React.Component {
 
         const itemStyle = {
             fontSize: "0.8em",
-            whiteSpace: "nowrap"
+            whiteSpace: "nowrap",
+            overflowX: "auto"
         }
 
         //selections
