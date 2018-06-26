@@ -133,7 +133,7 @@ class Timetable extends React.Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {data.map((day, i) => <TableRow component="th" scope="row"><CustomTableCell key={i}>{day[0].date}</CustomTableCell>{day.map((prayer, j) => <CustomTableCell numeric key={prayer.id}>{prayer.time}</CustomTableCell>)}</TableRow>)}
+                        {data.map((day, i) => <TableRow component="th" scope="row" key={"row" + i}><CustomTableCell key={i}>{day[0].date}</CustomTableCell>{day.map(prayer => <CustomTableCell numeric key={prayer.id}>{prayer.time}</CustomTableCell>)}</TableRow>)}
                     </TableBody>
                 </Table>
             </Paper>

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Timetable from '../Table/table'
+import Timetable from '../Table'
 import { geolocated } from 'react-geolocated';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
@@ -21,6 +21,19 @@ import {
     setLanguage,
     translate,
 } from 'react-switch-lang';
+
+//Redux
+import store from '../../store'
+import {
+    setGeolocation,
+    setGeoErrorMessage,
+    setPrayerErrorMessage,
+    setIsLoading,
+    setInputField,
+    setMethod,
+    setPeriod,
+    setLang
+} from '../../actions';
 
 import './prayer.css';
 
@@ -45,60 +58,56 @@ const styles = theme => ({
         '&:hover': {
             background: '#879F4B',
             color: "#1D2D3C",
-          }
-      },
+        }
+    },
 });
 
 class Prayer extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            currentDate: null,
-            geolocation: null,
-            error: "", //for geolocation
-            errorMessage: "", //for fetching prayer data
-            isLoading: true,
-            method: 2,
-            period: 0,
-            prayerTime: null,
-            address: "",
-            language: 0,
-        }
-    }
 
     fetchPrayer = (link) => {
         fetch(link)
             .then(handleResponse)
             .then((data) => {
-                this.setState((prevState) => {
-                    return { prayerTime: data, errorMessage: "" }
-                })
-                ReactDOM.render(<Timetable prayerTime={data} month={date.month} day={date.day} period={this.state.period} />, document.getElementById("table"))
+                store.dispatch(setPrayerErrorMessage(""));
+                ReactDOM.render(<Timetable prayerTime={data} month={date.month} day={date.day} period={store.getState().period} />, document.getElementById("table"))
             })
             .catch((error) => {
-                this.setState({
-                    errorMessage: error.data
-                })
+                store.dispatch(setPrayerErrorMessage(error.data));
             });
     }
 
-    componentWillReceiveProps(nextProps) {
-        !nextProps.isGeolocationAvailable
-            ? this.setState({ error: this.props.t('error.browser'), isLoading: false })
-            : !nextProps.isGeolocationEnabled
-                ? this.setState({ error: this.props.t('error.enable'), isLoading: false })
-                : nextProps.coords
-                    ? this.setState({ geolocation: nextProps.coords, isLoading: false })
-                    : this.setState({ error: null })
+    componentWillUpdate(props) {
+        if (!props.isGeolocationAvailable) {
+            if (this.props.isGeolocationAvailable !== props.isGeolocationAvailable) {
+                store.dispatch(setGeoErrorMessage(props.t('error.browser')))
+                store.dispatch(setIsLoading(false))
+            }
+        }
+        else if (!props.isGeolocationEnabled) {
+            if (this.props.isGeolocationEnabled !== props.isGeolocationEnabled) {
+                store.dispatch(setGeoErrorMessage(props.t('error.enable')))
+                store.dispatch(setIsLoading(false))
+            }
+        }
+        else if (props.coords) {
+            if (this.props.coords !== props.coords) {
+                store.dispatch(setGeolocation(props.coords))
+                store.dispatch(setIsLoading(false))
+            }
+        }
+        else {
+            store.dispatch(setGeoErrorMessage(null))
+        }
     }
 
     handleChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
+        event.target.name === "method"
+            ? store.dispatch(setMethod(event.target.value))
+            : store.dispatch(setPeriod(event.target.value))
     };
 
     handleLangChange = event => {
-        this.setState({ [event.target.name]: event.target.value });
+        store.dispatch(setLang(event.target.value))
         switch (event.target.value) {
             case 0:
                 setLanguage('en')
@@ -115,18 +124,19 @@ class Prayer extends React.Component {
     }
 
     listPrayer = () => {
-        if (this.state.address !== "")
-            this.fetchPrayer(`${PRAYER_API}ByAddress?address=${this.state.address}&method=${this.state.method}&month=${date.month}&year=${date.year}`)
+        const state = store.getState()
+        if (state.address !== "")
+            this.fetchPrayer(`${PRAYER_API}ByAddress?address=${state.address}&method=${state.method}&month=${date.month}&year=${date.year}`)
         else
-            this.fetchPrayer(`${PRAYER_API}?latitude=${this.state.geolocation.latitude}&longitude=${this.state.geolocation.longitude}&method=${this.state.method}&month=${date.month}&year=${date.year}`)
+            this.fetchPrayer(`${PRAYER_API}?latitude=${state.geolocation.latitude}&longitude=${state.geolocation.longitude}&method=${state.method}&month=${date.month}&year=${date.year}`)
     }
 
     handleInput = (e) => {
-        this.setState({ address: e.target.value })
+        store.dispatch(setInputField(e.target.value))
     }
 
     render() {
-        const { isLoading } = this.state
+        const state = store.getState()
 
         const { t } = this.props
 
@@ -160,7 +170,7 @@ class Prayer extends React.Component {
                             <FormControl className="form-control">
                                 <InputLabel htmlFor="method-simple"><div style={itemStyle}>{t('calculation_method')}</div></InputLabel>
                                 <Select
-                                    value={this.state.method}
+                                    value={state.method}
                                     onChange={this.handleChange}
                                     inputProps={{
                                         name: 'method',
@@ -176,7 +186,7 @@ class Prayer extends React.Component {
                             <FormControl className="form-control">
                                 <InputLabel htmlFor="period-simple"><div style={itemStyle}>{t('period')}</div></InputLabel>
                                 <Select
-                                    value={this.state.period}
+                                    value={state.period}
                                     onChange={this.handleChange}
                                     inputProps={{
                                         name: 'period',
@@ -192,7 +202,7 @@ class Prayer extends React.Component {
                             <FormControl className="form-control">
                                 <InputLabel htmlFor="language-simple"><div style={itemStyle}>{t('language_select')}</div></InputLabel>
                                 <Select
-                                    value={this.state.language}
+                                    value={state.language}
                                     onChange={this.handleLangChange}
                                     inputProps={{
                                         name: 'language',
@@ -227,13 +237,13 @@ class Prayer extends React.Component {
                             />
                         </form>
                     </div>
-                    
+
                     <div className="submit">
-                        {isLoading
+                        {state.isLoading
                             ? <CircularProgress style={{ color: purple[500] }} thickness={7} />
-                            : !this.state.error
+                            : !state.error
                                 ? <Button onClick={this.listPrayer} className={this.props.classes.button} variant="outlined" size="medium">{t('search')}</Button>
-                                : <div className="error">{this.state.error}</div>
+                                : <div className="error">{state.error}</div>
                         }
                     </div>
                 </div>

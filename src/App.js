@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Prayer from './components/Prayer/prayer'
+import Prayer from './components/Prayer'
 import './App.css';
 import {
   setTranslations,
