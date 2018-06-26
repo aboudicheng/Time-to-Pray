@@ -23,6 +23,7 @@ npm start
 
 ## Tools
 * [ReactJS](https://reactjs.org/)
+* [Redux](https://redux.js.org/)
 * [Material-UI](https://material-ui.com/)
 * [Prayer Times API](https://aladhan.com/prayer-times-api)
 * [react-geolocated](https://github.com/no23reason/react-geolocated)
