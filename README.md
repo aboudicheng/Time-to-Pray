@@ -28,3 +28,10 @@ npm start
 * [Prayer Times API](https://aladhan.com/prayer-times-api)
 * [react-geolocated](https://github.com/no23reason/react-geolocated)
 * [react-switch-lang](https://github.com/narinrit/react-switch-lang)
+
+## Language Support
+* English
+* French
+* Turkish
+* Chinese (Traditional)
+* Chinese (Simplified)
