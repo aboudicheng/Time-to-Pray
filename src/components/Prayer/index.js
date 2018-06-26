@@ -69,10 +69,12 @@ class Prayer extends React.Component {
             .then(handleResponse)
             .then((data) => {
                 store.dispatch(setPrayerErrorMessage(""));
+                store.dispatch(setIsLoading(false))
                 ReactDOM.render(<Timetable prayerTime={data} month={date.month} day={date.day} period={store.getState().period} />, document.getElementById("table"))
             })
             .catch((error) => {
                 store.dispatch(setPrayerErrorMessage(error.data));
+                store.dispatch(setIsLoading(false))
             });
     }
 
@@ -104,6 +106,8 @@ class Prayer extends React.Component {
         event.target.name === "method"
             ? store.dispatch(setMethod(event.target.value))
             : store.dispatch(setPeriod(event.target.value))
+        store.dispatch(setIsLoading(true))
+        this.listPrayer()
     };
 
     handleLangChange = event => {
