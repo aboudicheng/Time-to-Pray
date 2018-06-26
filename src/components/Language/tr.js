@@ -6,7 +6,7 @@ export const tr = {
         tr: "Türkçe",
         jp: "Japonca",
         zh: "Çince (Geleneksel)",
-        zh_cn: "Chinese (Basitleştirilmiş)"
+        zh_cn: "Çince (Basitleştirilmiş)"
     },
     made_by: " ",
     ping_cheng: "Ping Cheng",
