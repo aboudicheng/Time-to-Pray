@@ -33,5 +33,6 @@ npm start
 * English
 * French
 * Turkish
+* Japanese
 * Chinese (Traditional)
 * Chinese (Simplified)
