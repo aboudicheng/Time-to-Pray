@@ -3,6 +3,7 @@ export const en = {
     languages: {
         en: "English",
         fr: "French",
+        tr: "Turkish",
         zh: "Chinese (Traditional)",
         zh_cn: "Chinese (Simplified)"
     },

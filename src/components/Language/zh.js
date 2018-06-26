@@ -3,6 +3,7 @@ export const zh = {
     languages: {
         en: "英文",
         fr: "法文",
+        tr: "土耳其文",
         zh: "中文(繁體)",
         zh_cn: "中文(简体)"
     },
