@@ -8,10 +8,11 @@ import {
   translate,
 } from 'react-switch-lang';
 import { en } from './components/Language/en';
+import { fr } from './components/Language/fr'
 import { zh } from './components/Language/zh';
 import { zh_cn } from './components/Language/zh-cn';
 
-setTranslations({ en, zh, zh_cn });
+setTranslations({ en, fr, zh, zh_cn });
 setDefaultLanguage('en');
 
 setLanguageCookie();

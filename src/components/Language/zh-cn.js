@@ -2,6 +2,7 @@ export const zh_cn = {
     header: "礼拜时间",
     languages: {
         en: "英文",
+        fr: "法文",
         zh: "中文(繁體)",
         zh_cn: "中文(简体)"
     },
@@ -29,8 +30,6 @@ export const zh_cn = {
     period: "时段",
     period_select: {
         today: "今日",
-        tomorrow: "明日",
-        this_week: "本星期",
         this_month: "本月",
     },
     language_select: "语言",
@@ -44,5 +43,4 @@ export const zh_cn = {
         isha: "宵礼"
     },
     date: "日期",
-    time_timezone: "时间 (时区)",
 }

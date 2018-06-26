@@ -117,9 +117,12 @@ class Prayer extends React.Component {
                 setLanguage('en')
                 break;
             case 1:
-                setLanguage('zh')
+                setLanguage('fr')
                 break;
             case 2:
+                setLanguage('zh')
+                break;
+            case 3:
                 setLanguage('zh_cn')
                 break;
             default:
@@ -164,7 +167,7 @@ class Prayer extends React.Component {
         //selections
         const method_select = [t('methods.uisk'), t('methods.isna'), t('methods.mwl'), t('methods.uaqum'), t('methods.egas'), t('methods.igut'), t('methods.gr'), t('methods.kw'), t('methods.qt'), t('methods.muiss'), t('methods.uoidf'), t('methods.dibt')]
         const period_select = [t('period_select.today'), t('period_select.this_month')];
-        const lang_select = [t('languages.en'), t('languages.zh'), t('languages.zh_cn')]
+        const lang_select = [t('languages.en'), t('languages.fr'), t('languages.zh'), t('languages.zh_cn')]
 
         return (
             <div className="prayer-container">
@@ -226,10 +229,10 @@ class Prayer extends React.Component {
                                 margin="normal"
                                 className={this.props.classes.textField}
                                 inputProps={{
-                                    style: { fontSize: "0.7rem" }
+                                    style: { fontSize: "0.7em" }
                                 }}
                                 InputLabelProps={{
-                                    style: { fontSize: "0.6rem" }
+                                    style: { fontSize: "0.55em" }
                                 }}
                                 onChange={this.handleInput}
                                 onKeyPress={(e) => {

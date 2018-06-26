@@ -2,6 +2,7 @@ export const en = {
     header: "Time to Pray",
     languages: {
         en: "English",
+        fr: "French",
         zh: "Chinese (Traditional)",
         zh_cn: "Chinese (Simplified)"
     },
@@ -29,8 +30,6 @@ export const en = {
     period: "Period",
     period_select: {
         today: "Today",
-        tomorrow: "Tomorrow",
-        this_week: "This week",
         this_month: "This month",
     },
     language_select: "Language",
@@ -44,5 +43,4 @@ export const en = {
         isha: "Isha"
     },
     date: "Date",
-    time_timezone: "Time (timezone)",
 }
