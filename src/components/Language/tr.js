@@ -4,10 +4,11 @@ export const tr = {
         en: "İngilizce",
         fr: "Fransızca",
         tr: "Türkçe",
+        jp: "Japonca",
         zh: "Çince (Geleneksel)",
         zh_cn: "Chinese (Basitleştirilmiş)"
     },
-    made_by: "",
+    made_by: " ",
     ping_cheng: "Ping Cheng",
     calculation_method: "Hesaplama yöntemi",
     methods: {

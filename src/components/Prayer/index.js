@@ -120,9 +120,15 @@ class Prayer extends React.Component {
                 setLanguage('fr')
                 break;
             case 2:
-                setLanguage('zh')
+                setLanguage('tr')
                 break;
             case 3:
+                setLanguage('jp')
+                break;
+            case 4:
+                setLanguage('zh')
+                break;
+            case 5:
                 setLanguage('zh_cn')
                 break;
             default:
@@ -167,7 +173,7 @@ class Prayer extends React.Component {
         //selections
         const method_select = [t('methods.uisk'), t('methods.isna'), t('methods.mwl'), t('methods.uaqum'), t('methods.egas'), t('methods.igut'), t('methods.gr'), t('methods.kw'), t('methods.qt'), t('methods.muiss'), t('methods.uoidf'), t('methods.dibt')]
         const period_select = [t('period_select.today'), t('period_select.this_month')];
-        const lang_select = [t('languages.en'), t('languages.fr'), t('languages.tr'), t('languages.zh'), t('languages.zh_cn')]
+        const lang_select = [t('languages.en'), t('languages.fr'), t('languages.tr'), t('languages.jp'), t('languages.zh'), t('languages.zh_cn')]
 
         return (
             <div className="prayer-container">

@@ -4,6 +4,7 @@ export const en = {
         en: "English",
         fr: "French",
         tr: "Turkish",
+        jp: "Japanese",
         zh: "Chinese (Traditional)",
         zh_cn: "Chinese (Simplified)"
     },
