@@ -23,17 +23,23 @@ import {
 } from 'react-switch-lang';
 
 //Redux
-import store from '../../store'
+import { connect } from 'react-redux'
+
+
+//action types
 import {
-    setGeolocation,
-    setGeoErrorMessage,
-    setPrayerErrorMessage,
-    setIsLoading,
-    setInputField,
-    setMethod,
-    setPeriod,
-    setLang
-} from '../../actions';
+    SET_GEOLOCATION,
+    SET_GEO_ERROR_MESSAGE,
+    SET_PRAYER_ERROR_MESSAGE,
+    SET_ISLOADING,
+    SET_INPUT_FIELD,
+    SET_METHOD,
+    SET_PERIOD,
+    SET_LANGUAGE
+}
+    from '../../constants/action_types';
+
+import { compose } from 'recompose';
 
 import './prayer.css';
 
@@ -68,50 +74,50 @@ class Prayer extends React.Component {
         fetch(link)
             .then(handleResponse)
             .then((data) => {
-                store.dispatch(setPrayerErrorMessage(""));
-                store.dispatch(setIsLoading(false))
-                ReactDOM.render(<Timetable prayerTime={data} month={date.month} day={date.day} period={store.getState().period} />, document.getElementById("table"))
+                this.props.setPrayerErrorMessage("");
+                this.props.setIsLoading(false)
+                ReactDOM.render(<Timetable prayerTime={data} month={date.month} day={date.day} period={this.props.state.period} />, document.getElementById("table"))
             })
             .catch((error) => {
-                store.dispatch(setPrayerErrorMessage(error.data));
-                store.dispatch(setIsLoading(false))
+                this.props.setPrayerErrorMessage(error.data);
+                this.props.setIsLoading(false);
             });
     }
 
     componentWillUpdate(props) {
         if (!props.isGeolocationAvailable) {
             if (this.props.isGeolocationAvailable !== props.isGeolocationAvailable) {
-                store.dispatch(setGeoErrorMessage(props.t('error.browser')))
-                store.dispatch(setIsLoading(false))
+                this.props.setGeoErrorMessage(props.t('error.browser'))
+                this.props.setIsLoading(false)
             }
         }
         else if (!props.isGeolocationEnabled) {
             if (this.props.isGeolocationEnabled !== props.isGeolocationEnabled) {
-                store.dispatch(setGeoErrorMessage(props.t('error.enable')))
-                store.dispatch(setIsLoading(false))
+                this.props.setGeoErrorMessage(props.t('error.enable'))
+                this.props.setIsLoading(false)
             }
         }
         else if (props.coords) {
             if (this.props.coords !== props.coords) {
-                store.dispatch(setGeolocation(props.coords))
-                store.dispatch(setIsLoading(false))
+                this.props.setGeolocation(props.coords)
+                this.props.setIsLoading(false)
             }
         }
         else {
-            store.dispatch(setGeoErrorMessage(null))
+            this.props.setGeoErrorMessage(null)
         }
     }
 
     handleChange = event => {
         event.target.name === "method"
-            ? store.dispatch(setMethod(event.target.value))
-            : store.dispatch(setPeriod(event.target.value))
-        store.dispatch(setIsLoading(true))
+            ? this.props.setMethod(event.target.value)
+            : this.props.setPeriod(event.target.value)
+        this.props.setIsLoading(true)
         this.listPrayer()
     };
 
     handleLangChange = event => {
-        store.dispatch(setLang(event.target.value))
+        this.props.setLang(event.target.value)
         switch (event.target.value) {
             case 0:
                 setLanguage('en')
@@ -137,7 +143,7 @@ class Prayer extends React.Component {
     }
 
     listPrayer = () => {
-        const state = store.getState()
+        const { state } = this.props
         if (state.address !== "")
             this.fetchPrayer(`${PRAYER_API}ByAddress?address=${state.address}&method=${state.method}&month=${date.month}&year=${date.year}`)
         else
@@ -145,13 +151,11 @@ class Prayer extends React.Component {
     }
 
     handleInput = (e) => {
-        store.dispatch(setInputField(e.target.value))
+        this.props.setInputField(e.target.value)
     }
 
     render() {
-        const state = store.getState()
-
-        const { t } = this.props
+        const { state, t } = this.props
 
         const selectStyle = {
             width: 250,
@@ -265,9 +269,29 @@ class Prayer extends React.Component {
     }
 }
 
-export default withStyles(styles)(geolocated({
-    positionOptions: {
-        enableHighAccuracy: false,
-    },
-    userDecisionTimeout: 5000,
-})(translate(Prayer)));
+const mapStatetoProps = (state) => ({
+    state: state
+})
+
+const mapDispatchToProps = (dispatch) => ({
+    setGeolocation: (coords) => dispatch({ type: SET_GEOLOCATION, coords }),
+    setGeoErrorMessage: (error) => dispatch({ type: SET_GEO_ERROR_MESSAGE, error }),
+    setPrayerErrorMessage: (errorMessage) => dispatch({ type: SET_PRAYER_ERROR_MESSAGE, errorMessage }),
+    setIsLoading: (isLoading) => dispatch({ type: SET_ISLOADING, isLoading }),
+    setInputField: (value) => dispatch({ type: SET_INPUT_FIELD, value }),
+    setMethod: (method) => dispatch({ type: SET_METHOD, method }),
+    setPeriod: (period) => dispatch({ type: SET_PERIOD, period }),
+    setLang: (lang) => dispatch({ type: SET_LANGUAGE, lang })
+})
+
+export default compose(
+    withStyles(styles),
+    (geolocated({
+        positionOptions: {
+            enableHighAccuracy: false,
+        },
+        userDecisionTimeout: 5000,
+    })),
+    translate,
+    connect(mapStatetoProps, mapDispatchToProps)
+)(Prayer);

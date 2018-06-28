@@ -2,7 +2,7 @@ import { SET_GEO_ERROR_MESSAGE, SET_PRAYER_ERROR_MESSAGE } from '../constants/ac
 export function error(state = "", action) {
     switch (action.type) {
         case SET_GEO_ERROR_MESSAGE:
-            return action.payload
+            return action.error
         default:
             return state;
     }
@@ -11,7 +11,7 @@ export function error(state = "", action) {
 export function errorMessage(state = "", action) {
     switch (action.type) {
         case SET_PRAYER_ERROR_MESSAGE:
-            return action.payload
+            return action.errorMessage
         default:
             return state;
     }
